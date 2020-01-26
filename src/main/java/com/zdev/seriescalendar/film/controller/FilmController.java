@@ -2,6 +2,7 @@ package com.zdev.seriescalendar.film.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,4 +27,10 @@ public class FilmController {
 	public @ResponseBody Iterable<Film> getAllUsers() {
 		return filmService.filmRepository.findAll();
 	}
+	
+	@GetMapping(path="/films/uploads")
+	public @ResponseBody String getPicture() {
+		return "";
+	}
+	
 }
