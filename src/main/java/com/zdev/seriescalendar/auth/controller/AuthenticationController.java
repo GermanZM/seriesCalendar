@@ -1,6 +1,7 @@
 package com.zdev.seriescalendar.auth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,7 +22,7 @@ import com.zdev.seriescalendar.auth.service.JwtUserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-public class JwtAuthenticationController {
+public class AuthenticationController {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -47,4 +48,14 @@ public class JwtAuthenticationController {
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
 	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.POST, headers = {"Access-Control-Allow-Origin: *"})
+	public ResponseEntity<?> authenticationLogout(@RequestBody String customUser) {
+		//Pendiente consulta a base de datos para saber si el usuario está logueado o no
+		if(customUser != null)
+			return ResponseEntity.ok(HttpStatus.OK);
+		
+		return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+	}
+	
 }
