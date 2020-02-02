@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zdev.seriescalendar.auth.config.JwtTokenUtil;
+import com.zdev.seriescalendar.auth.model.CustomUser;
 import com.zdev.seriescalendar.auth.model.JwtRequest;
 import com.zdev.seriescalendar.auth.model.JwtResponse;
 import com.zdev.seriescalendar.auth.service.JwtUserService;
@@ -45,12 +46,12 @@ public class AuthenticationController {
 		} catch (DisabledException e) {
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
-			throw new Exception("INVALID_CREDENTIALS", e);
+			throw new Exception("INVALID_CREDENTIALS");
 		}
 	}
 	
-	@RequestMapping(value = "/logout", method = RequestMethod.POST, headers = {"Access-Control-Allow-Origin: *"})
-	public ResponseEntity<?> authenticationLogout(@RequestBody String customUser) {
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public ResponseEntity<?> authenticationLogout(@RequestBody CustomUser customUser) {
 		//Pendiente consulta a base de datos para saber si el usuario está logueado o no
 		if(customUser != null)
 			return ResponseEntity.ok(HttpStatus.OK);
