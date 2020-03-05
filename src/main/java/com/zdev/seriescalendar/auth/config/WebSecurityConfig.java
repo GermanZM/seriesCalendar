@@ -60,8 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/authenticate").permitAll()
-								.anyRequest()
-							    	.authenticated()
+								.antMatchers("/server/**").permitAll()
+								.anyRequest().authenticated()
 							    .and()
 							    .cors()
 							    	.configurationSource(corsConfigurationSource())
