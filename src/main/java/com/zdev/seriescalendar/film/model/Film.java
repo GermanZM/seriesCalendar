@@ -1,5 +1,6 @@
 package com.zdev.seriescalendar.film.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,7 +16,9 @@ import com.zdev.seriescalendar.auth.model.CustomUser;
 
 @Entity
 @Table(name = "film")
-public class Film {
+public class Film implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

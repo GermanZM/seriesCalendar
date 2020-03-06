@@ -21,4 +21,14 @@ public class Serie {
 	@Column(name = "title", nullable = false, unique = true)
 	private String title;
 	
+	@NotNull
+	@Column(name = "description", nullable = false)
+	private String description;
+	
+	@Column(name = "publicationYear", nullable = true)
+	private int publicationYear;
+	
+	@Column(name = "photo",nullable = true)
+	private String photo;
+	
 }
