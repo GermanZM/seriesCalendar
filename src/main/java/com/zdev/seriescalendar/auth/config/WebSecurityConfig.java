@@ -19,7 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import com.zdev.seriescalendar.auth.dao.UserRepository;
+import com.zdev.seriescalendar.auth.repository.UserRepository;
 import com.zdev.seriescalendar.auth.service.JwtUserService;
 
 @Configuration

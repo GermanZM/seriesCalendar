@@ -1,9 +1,8 @@
-package com.zdev.seriescalendar.film.model;
+package com.zdev.seriescalendar.episode.model;
 
 import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -12,24 +11,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-import com.sun.istack.NotNull;
 import com.zdev.seriescalendar.auth.model.CustomUser;
 
 @Entity
-@Table(name = "FilmUserRelation")
-public class FilmUserRelation implements Serializable  {
+@Table(name = "EpisodeUserRelation")
+public class EpisodeUserRelation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@EmbeddedId
-	private FilmUserKey id;
+	private EpisodeUserKey id;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@MapsId("pk_film_Id")
-	@JoinColumn(name = "pk_film_Id")
-	private Film film;
+	@ManyToOne
+	@MapsId("pk_episode_Id")
+	@JoinColumn(name = "pk_episode_Id")
+	private Episode episode;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@MapsId("pk_user_Id")
 	@JoinColumn(name = "pk_user_Id")
 	private CustomUser user;
@@ -37,20 +35,20 @@ public class FilmUserRelation implements Serializable  {
 	@Column(name = "viewDate", nullable = false)
 	private Date viewDate;
 
-	public FilmUserKey getId() {
+	public EpisodeUserKey getId() {
 		return id;
 	}
 
-	public void setId(FilmUserKey id) {
+	public void setId(EpisodeUserKey id) {
 		this.id = id;
 	}
 
-	public Film getFilm() {
-		return film;
+	public Episode getEpisode() {
+		return episode;
 	}
 
-	public void setFilm(Film film) {
-		this.film = film;
+	public void setEpisode(Episode episode) {
+		this.episode = episode;
 	}
 
 	public CustomUser getUser() {
@@ -61,18 +59,12 @@ public class FilmUserRelation implements Serializable  {
 		this.user = user;
 	}
 
-	public Date getDate() {
+	public Date getViewDate() {
 		return viewDate;
 	}
 
-	public void setDate(Date viewDate) {
+	public void setViewDate(Date viewDate) {
 		this.viewDate = viewDate;
 	}
-
 	
-
-	
-	
-	
-
 }

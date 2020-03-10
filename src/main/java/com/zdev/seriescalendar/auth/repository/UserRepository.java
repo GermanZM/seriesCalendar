@@ -1,4 +1,4 @@
-package com.zdev.seriescalendar.auth.dao;
+package com.zdev.seriescalendar.auth.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,12 +21,15 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.zdev.seriescalendar.film.model.Film;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zdev.seriescalendar.episode.model.EpisodeUserRelation;
+import com.zdev.seriescalendar.film.model.FilmUserRelation;
+import com.zdev.seriescalendar.serie.model.SerieUserRelation;
 
 @Entity
 @Table(name = "user")
 public class CustomUser implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -46,22 +50,27 @@ public class CustomUser implements Serializable {
 	private Boolean enabled;
 
 	@NotNull
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
 	private Profile profile;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "user_role", 
-		joinColumns = { @JoinColumn(name = "user_id", nullable = false) }, 
-		inverseJoinColumns = { @JoinColumn(name = "role_id", nullable = false) })
+		joinColumns = { @JoinColumn(name = "pk_user_id", nullable = false) }, 
+		inverseJoinColumns = { @JoinColumn(name = "pk_role_id", nullable = false) })
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Set<Role> roles;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "user_film", 
-			joinColumns = { @JoinColumn(name = "user_id", nullable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "film_id", nullable = false) })
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Set<Film> films;
+	@OneToMany(mappedBy = "film", cascade = CascadeType.PERSIST)
+	@JsonIgnore
+	private Set<FilmUserRelation> films;
+	
+	@OneToMany(mappedBy = "serie", cascade = CascadeType.PERSIST)
+	@JsonIgnore
+	private Set<SerieUserRelation> series;
+	
+	@OneToMany(mappedBy = "episode", cascade = CascadeType.PERSIST)
+	@JsonIgnore
+	private Set<EpisodeUserRelation> episodes;
 
 	public CustomUser() {
 
@@ -115,11 +124,11 @@ public class CustomUser implements Serializable {
 		this.roles = roles;
 	}
 
-	public Set<Film> getFilms() {
+	public Set<FilmUserRelation> getFilms() {
 		return films;
 	}
 
-	public void setFilms(Set<Film> films) {
+	public void setFilms(Set<FilmUserRelation> films) {
 		this.films = films;
 	}
 

@@ -20,22 +20,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zdev.seriescalendar.film.model.Film;
 import com.zdev.seriescalendar.film.service.FilmService;
+import com.zdev.seriescalendar.film.service.FilmUserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class FilmController {
 	
 	private FilmService filmService;
+	private FilmUserService filmUserService;
 	
 	@Autowired
-	public FilmController(FilmService filmService) {
+	public FilmController(FilmService filmService, FilmUserService filmUserService) {
 		super();
 		this.filmService = filmService;
+		this.filmUserService = filmUserService;
 	}
 	
 	@RequestMapping(path="/films",method = RequestMethod.GET)
-	public @ResponseBody Iterable<Film> getAllUsers() {
+	public @ResponseBody Iterable<Film> getAllFilms() {
 		return this.filmService.filmRepository.findAll();
+	}
+	
+	@RequestMapping(path="/filmsUser",method = RequestMethod.GET)
+	public @ResponseBody Iterable<Film> getAllUserFilm(String userId) {
+		return this.filmUserService.filmUserRepository.getAllFilmByUser(userId);
 	}
 	
 	@GetMapping("/server/images/films/{photoName:.+}") //Regular expression :.+ (photo.extension)

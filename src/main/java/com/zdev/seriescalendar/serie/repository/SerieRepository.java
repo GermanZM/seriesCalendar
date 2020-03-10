@@ -1,4 +1,4 @@
-package com.zdev.seriescalendar.serie.dao;
+package com.zdev.seriescalendar.serie.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import com.zdev.seriescalendar.serie.model.Serie;

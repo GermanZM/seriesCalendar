@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.zdev.seriescalendar.auth.dao.UserRepository;
 import com.zdev.seriescalendar.auth.model.CustomUser;
+import com.zdev.seriescalendar.auth.repository.UserRepository;
 
 
 

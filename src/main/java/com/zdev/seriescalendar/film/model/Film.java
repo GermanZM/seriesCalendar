@@ -3,23 +3,24 @@ package com.zdev.seriescalendar.film.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.zdev.seriescalendar.auth.model.CustomUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "film")
 public class Film implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "film_id", unique = true, nullable = false)
@@ -34,7 +35,7 @@ public class Film implements Serializable {
 	private String description;
 	
 	@NotNull
-	@Column(name = "duration", nullable = false)
+	@Column(name = "duration", nullable = true)
 	private double duration;
 	
 	@Column(name = "publicationYear", nullable = true)
@@ -43,8 +44,9 @@ public class Film implements Serializable {
 	@Column(name = "photo",nullable = true)
 	private String photo;
 	
-	@ManyToMany(mappedBy = "films")
-	private Set<CustomUser> users;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+	@JsonIgnore //Solve infinite loop (JSON Serialize) 
+	private Set<FilmUserRelation> users;
 
 	public Integer getId() {
 		return id;
@@ -94,11 +96,11 @@ public class Film implements Serializable {
 		this.photo = photo;
 	}
 
-	public Set<CustomUser> getUsers() {
+	public Set<FilmUserRelation> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Set<CustomUser> users) {
+	public void setUsers(Set<FilmUserRelation> users) {
 		this.users = users;
 	}
 	

@@ -1,10 +1,6 @@
 package com.zdev.seriescalendar.auth.model;
 
-import java.io.Serializable;
-
-public class JwtResponse implements Serializable {
-
-	private static final long serialVersionUID = 5418206799591143042L;
+public class JwtResponse {
 	
 	private final String jwtToken;
 	
