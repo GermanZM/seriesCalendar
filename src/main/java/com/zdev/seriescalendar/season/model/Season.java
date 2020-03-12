@@ -2,6 +2,7 @@ package com.zdev.seriescalendar.season.model;
 
 import java.io.Serializable;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zdev.seriescalendar.episode.model.Episode;
 import com.zdev.seriescalendar.serie.model.Serie;
@@ -29,7 +30,6 @@ public class Season implements Serializable {
 	@Column(name = "pk_season_Id", unique = true, nullable = false)
 	private Integer id;
 	
-	@NotNull
 	@Column(name = "title", nullable = false, unique = true)
 	private String title;
 	
@@ -37,7 +37,7 @@ public class Season implements Serializable {
 	@JoinColumn(name = "serie_id")
 	private Serie serie;
 	
-	@OneToMany(mappedBy = "season", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "season", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JsonIgnore //Solve infinite loop (JSON Serialize) 
 	private Set<Episode> episodes;
 	

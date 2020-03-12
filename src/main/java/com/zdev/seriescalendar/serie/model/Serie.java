@@ -27,7 +27,6 @@ public class Serie implements Serializable {
 	@Column(name = "pk_serie_id", unique = true, nullable = false)
 	private Integer id;
 	
-	@NotNull
 	@Column(name = "title", nullable = false, unique = true)
 	private String title;
 	
@@ -41,11 +40,11 @@ public class Serie implements Serializable {
 	@Column(name = "photo",nullable = true)
 	private String photo;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JsonIgnore
 	private Set<SerieUserRelation> users;
 	
-	@OneToMany(mappedBy = "serie", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "serie", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JsonIgnore
 	private Set<Season> seasons;
 

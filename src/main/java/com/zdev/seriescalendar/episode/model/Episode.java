@@ -1,6 +1,7 @@
 package com.zdev.seriescalendar.episode.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zdev.seriescalendar.season.model.Season;
@@ -29,16 +29,59 @@ public class Episode implements Serializable {
 	@Column(name = "pk_season_Id", unique = true, nullable = false)
 	private Integer id;
 	
-	@NotNull
 	@Column(name = "title", nullable = false, unique = true)
 	private String title;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name = "season_id")
 	private Season season;
 	
-	@OneToMany(mappedBy = "episode", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "episode", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JsonIgnore
 	private Set<EpisodeUserRelation> users;
+	
+	@Column(name = "publicationDay", nullable = false)
+	private Date publicationDay;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Season getSeason() {
+		return season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
+	}
+
+	public Set<EpisodeUserRelation> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<EpisodeUserRelation> users) {
+		this.users = users;
+	}
+
+	public Date getPublicationDay() {
+		return publicationDay;
+	}
+
+	public void setPublicationDay(Date publicationDay) {
+		this.publicationDay = publicationDay;
+	}
+	
 
 }

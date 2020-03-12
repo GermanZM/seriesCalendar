@@ -37,38 +37,35 @@ public class CustomUser implements Serializable {
 	@Column(name = "user_id", unique = true, nullable = false)
 	private Integer id;
 
-	@NotNull
 	@Column(name = "username", nullable = false, unique = true)
 	private String username;
 
-	@NotNull
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@NotNull
 	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
 
 	@NotNull
-	@OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
+	@OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Profile profile;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinTable(name = "user_role", 
 		joinColumns = { @JoinColumn(name = "pk_user_id", nullable = false) }, 
 		inverseJoinColumns = { @JoinColumn(name = "pk_role_id", nullable = false) })
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Set<Role> roles;
 	
-	@OneToMany(mappedBy = "film", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "film", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JsonIgnore
 	private Set<FilmUserRelation> films;
 	
-	@OneToMany(mappedBy = "serie", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "serie", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JsonIgnore
 	private Set<SerieUserRelation> series;
 	
-	@OneToMany(mappedBy = "episode", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "episode", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JsonIgnore
 	private Set<EpisodeUserRelation> episodes;
 

@@ -3,6 +3,7 @@ package com.zdev.seriescalendar.auth.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ public class Role implements Serializable {
 	@Column(unique=true,length=20)
 	private String name;
 	
-	@ManyToMany(mappedBy = "roles")
+	@ManyToMany(mappedBy = "roles", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Set<CustomUser> users;
 
 	public Integer getId() {

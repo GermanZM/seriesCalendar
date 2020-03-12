@@ -1,5 +1,6 @@
 package com.zdev.seriescalendar.auth.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,7 +44,7 @@ public class Profile {
     @Column(name = "country",nullable = false)
     private String country;
     
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "FK_USERID", updatable = false, nullable = false)
     private CustomUser user;
     

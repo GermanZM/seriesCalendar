@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,15 +25,12 @@ public class Film implements Serializable {
 	@Column(name = "film_id", unique = true, nullable = false)
 	private Integer id;
 	
-	@NotNull
 	@Column(name = "title", nullable = false, unique = true)
 	private String title;
 	
-	@NotNull
 	@Column(name = "description", nullable = false)
 	private String description;
 	
-	@NotNull
 	@Column(name = "duration", nullable = true)
 	private double duration;
 	
@@ -44,7 +40,7 @@ public class Film implements Serializable {
 	@Column(name = "photo",nullable = true)
 	private String photo;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JsonIgnore //Solve infinite loop (JSON Serialize) 
 	private Set<FilmUserRelation> users;
 

@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-import com.sun.istack.NotNull;
 import com.zdev.seriescalendar.auth.model.CustomUser;
 
 @Entity
@@ -24,12 +23,12 @@ public class FilmUserRelation implements Serializable  {
 	@EmbeddedId
 	private FilmUserKey id;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@MapsId("pk_film_Id")
 	@JoinColumn(name = "pk_film_Id")
 	private Film film;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@MapsId("pk_user_Id")
 	@JoinColumn(name = "pk_user_Id")
 	private CustomUser user;

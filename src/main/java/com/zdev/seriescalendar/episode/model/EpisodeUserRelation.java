@@ -3,6 +3,7 @@ package com.zdev.seriescalendar.episode.model;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -22,12 +23,12 @@ public class EpisodeUserRelation implements Serializable {
 	@EmbeddedId
 	private EpisodeUserKey id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@MapsId("pk_episode_Id")
 	@JoinColumn(name = "pk_episode_Id")
 	private Episode episode;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@MapsId("pk_user_Id")
 	@JoinColumn(name = "pk_user_Id")
 	private CustomUser user;

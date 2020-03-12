@@ -2,6 +2,8 @@ package com.zdev.seriescalendar.serie.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -10,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-import com.sun.istack.NotNull;
 import com.zdev.seriescalendar.auth.model.CustomUser;
 
 @Entity
@@ -22,26 +23,23 @@ public class SerieUserRelation implements Serializable {
 	@EmbeddedId
 	private SerieUserKey id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@MapsId("pk_serie_Id")
 	@JoinColumn(name = "pk_serie_Id")
 	private Serie serie;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@MapsId("pk_user_Id")
 	@JoinColumn(name = "pk_user_Id")
 	private CustomUser user;
 	
-	@NotNull
-	@Column(name = "followDate",nullable = false)
+	@Column(name = "followDate", nullable = false)
 	private Date followDate;
 	
-	@NotNull
-	@Column(name = "isFavourite")
+	@Column(name = "isFavourite", nullable = true)
 	private boolean isFavourite = false;
 	
-	@NotNull
-	@Column(name = "isWatch")
+	@Column(name = "isWatch", nullable = true)
 	private boolean isWatch = false;
 
 	public SerieUserKey getId() {
