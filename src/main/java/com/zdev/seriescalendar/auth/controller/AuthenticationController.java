@@ -19,6 +19,8 @@ import com.zdev.seriescalendar.auth.model.CustomUser;
 import com.zdev.seriescalendar.auth.model.JwtRequest;
 import com.zdev.seriescalendar.auth.model.JwtResponse;
 import com.zdev.seriescalendar.auth.service.JwtUserService;
+import com.zdev.seriescalendar.error.model.CustomException;
+import com.zdev.seriescalendar.error.model.ResponseError;
 
 
 @RestController
@@ -34,19 +36,24 @@ public class AuthenticationController {
 	
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-		final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-		final String token = jwtTokenUtil.generateToken(userDetails);
-		return ResponseEntity.ok(new JwtResponse(token));
+		try {
+			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+
+			final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+			final String token = jwtTokenUtil.generateToken(userDetails);
+			return ResponseEntity.ok(new JwtResponse(token));
+		} catch (CustomException e) {
+			return ResponseEntity.ok(e.getResponseError());
+		}
 	}
 	
 	private void authenticate(String username, String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
-			throw new Exception("USER_DISABLED", e);
+			throw new CustomException(new ResponseError(HttpStatus.BAD_REQUEST), "Usuario deshabilitado", e);
 		} catch (BadCredentialsException e) {
-			throw new Exception("INVALID_CREDENTIALS");
+			throw new CustomException(new ResponseError(HttpStatus.UNAUTHORIZED), "Credenciales incorrectas", e);
 		}
 	}
 	
