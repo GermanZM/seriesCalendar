@@ -32,7 +32,7 @@ public class FilmController {
 	
 	@RequestMapping(path="/films",method = RequestMethod.GET)
 	public @ResponseBody Iterable<Film> getAllFilms() {
-		return this.filmService.filmRepository.findAll();
+		return this.filmService.filmRepository.findAllFilmsOrderByName();
 	}
 	
 	@RequestMapping(path="/filmsUser",method = RequestMethod.GET)

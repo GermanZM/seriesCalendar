@@ -2,7 +2,6 @@ package com.zdev.seriescalendar.auth.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.zdev.seriescalendar.auth.model.CustomUser;
 import com.zdev.seriescalendar.auth.repository.UserRepository;
 
@@ -49,8 +47,20 @@ public class JwtUserService implements UserDetailsService {
 				.map(role -> new SimpleGrantedAuthority(role.getName()))
 				.collect(Collectors.toList());
 		
-		return new User(username,user.getPassword(),true,true,true,true,authorities);
+		return new User(username, user.getPassword(), user.getEnabled(), true, true, true, authorities);
 		
+	}
+	
+	@Transactional(readOnly = true)
+	public CustomUser loadCustomUserByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+	
+	@Transactional()
+	public boolean saveUser(CustomUser customUser) {
+		this.userRepository.save(customUser);
+		
+		return true;
 	}
 
 }

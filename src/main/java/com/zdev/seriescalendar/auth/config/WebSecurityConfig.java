@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/authenticate","/server/**","/logout").permitAll()
+		http.authorizeRequests().antMatchers("/authenticate","/logout","/register","/server/**").permitAll()
 								.anyRequest().authenticated()
 							    .and()
 							    .cors()

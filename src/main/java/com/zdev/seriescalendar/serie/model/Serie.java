@@ -27,7 +27,7 @@ public class Serie implements Serializable {
 	@Column(name = "pk_serie_id", unique = true, nullable = false)
 	private Integer id;
 	
-	@Column(name = "title", nullable = false, unique = true)
+	@Column(name = "title", nullable = false, unique = true, length = 50)
 	private String title;
 	
 	@NotNull

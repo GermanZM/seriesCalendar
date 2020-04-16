@@ -29,7 +29,7 @@ public class SerieController {
 	
 	@RequestMapping(path="/series",method = RequestMethod.GET)
 	public @ResponseBody Iterable<Serie> getAllUsers() {
-		return this.serieService.serieRepository.findAll();
+		return this.serieService.serieRepository.findAllSeriesOrderByName();
 	}
 	
 	@GetMapping("/server/images/series/{photoName:.+}") //Regular expression :.+ (photo.extension)

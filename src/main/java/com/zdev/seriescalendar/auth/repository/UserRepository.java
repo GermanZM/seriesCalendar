@@ -15,6 +15,7 @@ public interface UserRepository extends CrudRepository<CustomUser, Integer> {
 	
 	//@Query("SELECT * FROM USER U WHERE U.USERNAME = ?1")
 	public CustomUser findByUsername(String username);
+	
 
 }
 
