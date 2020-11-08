@@ -25,7 +25,7 @@ public class Role implements Serializable {
 	@Column(unique=true,length=20)
 	private String name;
 	
-	@ManyToMany(mappedBy = "roles", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@ManyToMany(mappedBy = "roles", cascade = {CascadeType.PERSIST})
 	private Set<CustomUser> users;
 
 	public Integer getId() {

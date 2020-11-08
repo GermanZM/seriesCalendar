@@ -3,6 +3,7 @@ package com.zdev.seriescalendar.auth.model;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,10 +17,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zdev.seriescalendar.episode.model.EpisodeUserRelation;
 import com.zdev.seriescalendar.film.model.FilmUserRelation;
@@ -48,31 +49,30 @@ public class CustomUser implements Serializable {
 	@OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Profile profile;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
 	@JoinTable(name = "user_role", 
 		joinColumns = { @JoinColumn(name = "pk_user_id", nullable = false) }, 
 		inverseJoinColumns = { @JoinColumn(name = "pk_role_id", nullable = false) })
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Set<Role> roles;
 	
-	@OneToMany(mappedBy = "film", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(mappedBy = "film", cascade = {CascadeType.PERSIST})
 	@JsonIgnore
 	private Set<FilmUserRelation> films;
 	
-	@OneToMany(mappedBy = "serie", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(mappedBy = "serie", cascade = {CascadeType.PERSIST})
 	@JsonIgnore
 	private Set<SerieUserRelation> series;
 	
-	@OneToMany(mappedBy = "episode", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(mappedBy = "episode", cascade = {CascadeType.PERSIST})
 	@JsonIgnore
 	private Set<EpisodeUserRelation> episodes;
 	
-	@CreatedDate
 	@Column
+	@CreatedDate
 	private ZonedDateTime createdAt;
 	
-	@LastModifiedBy
 	@Column
+	@LastModifiedBy
 	private CustomUser updatedBy;
 
 	public CustomUser() {
